@@ -53,7 +53,7 @@ static void seperate_token(
 		seperation_size   // to
 		);
 	// update last_seperation for the next token
-	*last_seperation = i + 1;
+	*last_seperation = i; 
 
 	// add the token to the buffer
 	add_token(buf, seperated_token, type);
@@ -62,6 +62,7 @@ static void seperate_token(
 }
 
 vec_t lex_data(const char* data, u32 size) {
+	// TODO: Fix white space (run the code)
 	vec_t lex_result;
 	u32 last_seperation = 0;
 	// buffer to convert a character to a string
@@ -75,29 +76,41 @@ vec_t lex_data(const char* data, u32 size) {
 		case NEW_LINE_N:
 		case NEW_LINE_R:
 		case TAP:
-			// ignore these character
+			// ignore the SPACE, NEW_LINE_N, NEW_LINE_R and TAP character
+			// on next seperation
+			last_seperation++;
 			break;
 		case ASSIGNMENT_OPERATOR:
 			seperate_token(data, &last_seperation, i, NODE_NAME, &lex_result);
 
 			char_to_str[0] = ASSIGNMENT_OPERATOR;
 			add_token(&lex_result, char_to_str, NODE_STARTER);
+
+			// ignore the ASSIGNMENT_OPERATOR character on next seperation
+			last_seperation++;
 			break;
 		case COMMA_SEPARATOR:
 			seperate_token(data, &last_seperation, i, NODE_VALUE, &lex_result);
 
 			char_to_str[0] = COMMA_SEPARATOR;
 			add_token(&lex_result, char_to_str, NODE_NEXT);
+
+			// ignore the COMMA_SEPARATOR character on next seperation
+			last_seperation++;
 			break;
 		case STATEMENT_TERMINATOR:
 			seperate_token(data, &last_seperation, i, NODE_VALUE, &lex_result);
 
 			char_to_str[0] = STATEMENT_TERMINATOR;
 			add_token(&lex_result, char_to_str, NODE_ENDER);
+
+			// ignore the STATEMENT_TERMINATOR character on next seperation
+			last_seperation++;
 			break;
 		default:
 			break;
 		}
+		printf("i: %d\nchar: %c\nlast: %d\n\n", i, data[i], last_seperation);
 	}
 
 	return lex_result;
