@@ -3,7 +3,7 @@
 #include <type.h>
 
 typedef struct {
-	u8 is_init;
+	bool is_init;
 
 	void** element;
 

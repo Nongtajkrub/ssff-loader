@@ -8,9 +8,9 @@ typedef vec_t lex_result_t;
 
 typedef enum {
 	UNKNOWN,
-	NODE_NAME,
+	NODE_HEAD,
 	NODE_STARTER,
-	NODE_VALUE,
+	NODE_TAIL,
 	NODE_NEXT,
 	NODE_ENDER
 } token_type_t;

@@ -4,6 +4,13 @@
 #include "hashmap.h"
 #include <type.h>
 
+typedef struct {
+	bool is_map;
+
+	hashmap_t map;
+	const char* val;
+} val_t;
+
 typedef hashmap_t parse_result_t;
 
 parse_result_t parse_data(const file_t* data);

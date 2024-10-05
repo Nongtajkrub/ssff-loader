@@ -77,7 +77,7 @@ lex_result_t lex_data(const char* data, u32 size) {
 			last_seperation++;
 			break;
 		case ASSIGNMENT_OPERATOR:
-			seperate_token(data, &last_seperation, i, NODE_NAME, &lex_result);
+			seperate_token(data, &last_seperation, i, NODE_HEAD, &lex_result);
 
 			char_to_str[0] = ASSIGNMENT_OPERATOR;
 			add_token(&lex_result, char_to_str, NODE_STARTER);
@@ -86,7 +86,7 @@ lex_result_t lex_data(const char* data, u32 size) {
 			last_seperation++;
 			break;
 		case COMMA_SEPARATOR:
-			seperate_token(data, &last_seperation, i, NODE_VALUE, &lex_result);
+			seperate_token(data, &last_seperation, i, NODE_TAIL, &lex_result);
 
 			char_to_str[0] = COMMA_SEPARATOR;
 			add_token(&lex_result, char_to_str, NODE_NEXT);
@@ -95,7 +95,7 @@ lex_result_t lex_data(const char* data, u32 size) {
 			last_seperation++;
 			break;
 		case STATEMENT_TERMINATOR:
-			seperate_token(data, &last_seperation, i, NODE_VALUE, &lex_result);
+			seperate_token(data, &last_seperation, i, NODE_TAIL, &lex_result);
 
 			char_to_str[0] = STATEMENT_TERMINATOR;
 			add_token(&lex_result, char_to_str, NODE_ENDER);

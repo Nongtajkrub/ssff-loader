@@ -10,6 +10,13 @@ int main() {
 
 	parse = parse_data(&file);
 
+	/*
+	val_t* soft = (val_t*)map_get(&data->map, &type);
+
+	printf("%s\n", soft->val);
+	*/
+
+	printf("done\n");
 	file_deinit(&file);
 	return 0;
 }
