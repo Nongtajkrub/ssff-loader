@@ -4,6 +4,8 @@
 #include "file.h"
 #include <type.h>
 
+typedef vec_t lex_result_t;
+
 typedef enum {
 	UNKNOWN,
 	NODE_NAME,
@@ -19,5 +21,7 @@ typedef struct {
 	token_type_t type;
 } token_t;
 
-vec_t lex_data(const char* data, u32 size);
-void lex_destroy(vec_t* lex_result);
+lex_result_t lex_data(const char* data, u32 size);
+void lex_destroy(lex_result_t* lex_result);
+
+token_t lex_get(lex_result_t* lex_result, u32 index);

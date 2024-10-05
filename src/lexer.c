@@ -18,7 +18,7 @@ static void substr(char* buf, u32 size, const char* src, u32 i1, u32 i2) {
 	strncpy_s(buf, size, src + i1, i2 - 1);
 }
 
-static void add_token(vec_t* buf, const char* data, token_type_t type) {
+static void add_token(lex_result_t* buf, const char* data, token_type_t type) {
 	const u32 data_size = strlen(data) + 1;	
 
 	token_t token = {
@@ -27,7 +27,7 @@ static void add_token(vec_t* buf, const char* data, token_type_t type) {
 	};
 	strcpy_s(token.data, data_size, data);
 
-	vec_push(buf, (char*)&token);
+	vec_push(buf, (void*)&token);
 }
 
 static void seperate_token(
@@ -35,13 +35,10 @@ static void seperate_token(
 	u32* last_seperation,
 	u32 i,
 	token_type_t type,
-	vec_t* buf
+	lex_result_t* buf
 	) {
-	char* seperated_token;
 	u32 seperation_size = (i - *last_seperation) + 1;
-
-	// allocate memory for the separated token
-	seperated_token = malloc(seperation_size);
+	char* seperated_token = malloc(seperation_size);
 	ASSERT(seperated_token != NULL, DEF_ALLOC_ERRMSG);
 
 	// extract the substring
@@ -61,21 +58,20 @@ static void seperate_token(
 	free(seperated_token);
 }
 
-vec_t lex_data(const char* data, u32 size) {
-	// TODO: Fix white space (run the code)
-	vec_t lex_result;
+lex_result_t lex_data(const char* data, u32 size) {
+	lex_result_t lex_result;
 	u32 last_seperation = 0;
 	// buffer to convert a character to a string
 	char char_to_str[2] = {'\0', '\0'};
 
 	vec_init(&lex_result, sizeof(token_t));
-	
+
 	for (u32 i = 0; i < size; i++) {
 		switch (data[i]) {
 		case SPACE:
+		case TAP:
 		case NEW_LINE_N:
 		case NEW_LINE_R:
-		case TAP:
 			// ignore the SPACE, NEW_LINE_N, NEW_LINE_R and TAP character
 			// on next seperation
 			last_seperation++;
@@ -110,25 +106,29 @@ vec_t lex_data(const char* data, u32 size) {
 		default:
 			break;
 		}
-		printf("i: %d\nchar: %c\nlast: %d\n\n", i, data[i], last_seperation);
 	}
 
 	return lex_result;
 }
 
-void lex_destroy(vec_t *lex_result) {
+void lex_destroy(lex_result_t *lex_result) {
 	if (lex_result == NULL) {
 		return;
 	}
 
-	token_t token_buf;
+	token_t* token_buf;
 
+	// free all malloc memory 
 	for (u32 i = 0; i < lex_result->size; i++) {
-		vec_get(lex_result, i, (char*)&token_buf);
-		if (token_buf.data != NULL) {
-			free(token_buf.data);
+		token_buf = (token_t*)vec_get(lex_result, i);
+		if (token_buf->data != NULL) {
+			free(token_buf->data);
 		}	
 	}
 
 	vec_deinit(lex_result);
+}
+
+token_t lex_get(lex_result_t* lex_result, u32 index) {
+	return *(token_t*)vec_get(lex_result, index);
 }

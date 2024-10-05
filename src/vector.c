@@ -1,5 +1,6 @@
 #include "vector.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -11,37 +12,39 @@
 #define DEF_CAPACITY 4 
 
 void vec_init(vec_t* vec, u32 element_size) {
-	ASSERT(vec != NULL, DEF_ALLOC_ERRMSG);
-
-	vec->element = calloc(DEF_CAPACITY, sizeof(char*));
+	vec->element = calloc(DEF_CAPACITY, sizeof(void*));
 	ASSERT(vec->element != NULL, DEF_ALLOC_ERRMSG);
+
 	vec->element_size = element_size;
 	vec->capacity = DEF_CAPACITY;
 	vec->size = 0;
-	vec->init = TRUE;
+	vec->is_init = TRUE;
 }
 
 void vec_deinit(vec_t* vec) {
-	if (!vec->init) {
+	if (!vec->is_init) {
 		return;
 	}
 
-	vec->init = FALSE;
+	vec->is_init = FALSE;
 	for (u32 i = 0; i < vec->size; i++) {
 		free(vec->element[i]);
 	}
 	free(vec->element);
 }
 
-void vec_push(vec_t* vec, char* element) {
-	ASSERT(vec != NULL && vec->element != NULL, VECTOR_NOT_ALLOC_ERRMSG);
-
-	// vec is full
+static void handle_vec_full(vec_t* vec) {
 	if (vec->size > 0 && vec->size % vec->capacity == 0) {
 		vec->capacity = (vec->size / DEF_CAPACITY + 1) * DEF_CAPACITY;
-		vec->element = realloc(vec->element, vec->capacity * sizeof(char*));
+		vec->element = realloc(vec->element, vec->capacity * sizeof(void*));
 		ASSERT(vec->element != NULL, DEF_ALLOC_ERRMSG);
 	}
+}
+
+void vec_push(vec_t* vec, void* element) {
+	ASSERT(vec != NULL && vec->element != NULL, VECTOR_NOT_ALLOC_ERRMSG);
+
+	handle_vec_full(vec);
 
 	vec->element[vec->size] = malloc(vec->element_size);
 	memcpy(vec->element[vec->size], element, vec->element_size);
@@ -55,9 +58,10 @@ void vec_pop(vec_t* vec) {
 	}
 }
 
-void vec_get(const vec_t* vec, u32 index, char* buf) {
+void* vec_get(const vec_t* vec, u32 index) {
 	ASSERT(vec != NULL && vec->element != NULL, VECTOR_NOT_ALLOC_ERRMSG);
 	ASSERT(index < vec->size, OUT_OF_RANGE_ERRMSG);
 
-	memcpy(buf, vec->element[index], vec->element_size);
+	//memcpy(buf, vec->element[index], vec->element_size);
+	return vec->element[index];
 }

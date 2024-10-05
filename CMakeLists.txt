@@ -10,7 +10,9 @@ add_executable(
     main 
    
     src/main.c
+    src/lexer.c
+    src/parser.c
     src/file.c
     src/vector.c
-    src/lexer.c
+    src/hashmap.c
 )

@@ -3,9 +3,9 @@
 #include <type.h>
 
 typedef struct {
-	u8 init;
+	u8 is_init;
 
-	char** element;
+	void** element;
 
 	u32 element_size;
 	u32 capacity;
@@ -15,6 +15,7 @@ typedef struct {
 void vec_init(vec_t* vec, u32 element_size);
 void vec_deinit(vec_t* vec);
 
-void vec_push(vec_t* vec, char* element);
+void vec_push(vec_t* vec, void* element);
 void vec_pop(vec_t* vec);
-void vec_get(const vec_t* vec, u32 index, char* buf);
+
+void* vec_get(const vec_t* vec, u32 index);
