@@ -111,6 +111,7 @@ lex_result_t lex_data(const char* data, u32 size) {
 	return lex_result;
 }
 
+// TODO: Fix lex_destroy crashing
 void lex_destroy(lex_result_t *lex_result) {
 	if (lex_result == NULL) {
 		return;

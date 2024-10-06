@@ -4,19 +4,20 @@
 
 int main() {
 	file_t file;
+	lex_result_t lex;
 	parse_result_t parse;
 
+	// get raw file data
 	file_init(&file, DEF_DATA_FILE_NAME);
 
-	parse = parse_data(&file);
+	// lex data
+	lex = lex_data(file.content, file.size);
 
-	/*
-	val_t* soft = (val_t*)map_get(&data->map, &type);
+	// parse data
+	parse = parse_data(&lex);
 
-	printf("%s\n", soft->val);
-	*/
-
-	printf("done\n");
 	file_deinit(&file);
+	lex_destroy(&lex);
+	printf("done\n");
 	return 0;
 }

@@ -13,8 +13,6 @@ static u32 hash(hashmap_t* map, char* key) {
 	u32 factor = DEF_HASHING_FACTOR;
 	u32 key_size = (map->key_is_str) ? strlen(key) : map->key_size;
 
-	printf("hash: %s\nsize: %d\n", key, key_size);
-
     for (u32 i = 0; i < key_size; i++) {
 		// bucket_i = bucket_i + (ascii value of char * (primeNumber ^ x))... 
 		// where x = 1, 2, 3....n
@@ -88,20 +86,16 @@ void* map_get(hashmap_t* map, void* key) {
 	u32 bucket_i = hash(map, (char*)key);
 	hashmap_item_t *bucket_h = map->items[bucket_i];
 	
-	printf("bucket index get: %d\n", bucket_i);
-
 	if (bucket_h == NULL) {
-		printf("bucket not found\n");
+		printf("Bucket head not found for: %s\n", (char*)key);
 		return NULL;
 	}
 
 	while (bucket_h != NULL) {
 		// IFERR: Casting key to char*
 		if (strcmp(bucket_h->key, (char*)key) == 0) {
-			printf("bucket found\n");
 			return bucket_h->val;
 		}
-		printf("Next bucket on %s and %s\n", bucket_h->key, (char*)key);
 		bucket_h = bucket_h->next;
 	}
 
@@ -113,8 +107,6 @@ void* map_get_key(hashmap_t* map, void* key) {
 	u32 bucket_i = hash(map, (char*)key);
 	hashmap_item_t *bucket_h = map->items[bucket_i];
 	
-	printf("bucket index get: %d\n", bucket_i);
-
 	if (bucket_h == NULL) {
 		return NULL;
 	}

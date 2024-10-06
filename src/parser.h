@@ -1,6 +1,6 @@
 #pragma once
 
-#include "file.h"
+#include "lexer.h"
 #include "hashmap.h"
 #include <type.h>
 
@@ -13,5 +13,5 @@ typedef struct {
 
 typedef hashmap_t parse_result_t;
 
-parse_result_t parse_data(const file_t* data);
+parse_result_t parse_data(lex_result_t* lex);
 const char* parse_get(parse_result_t *parse, const char* key);
