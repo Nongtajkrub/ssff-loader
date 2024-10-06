@@ -74,8 +74,15 @@ parse_result_t parse_data(const file_t* data) {
 
 	printf("\n----------------------------------------------\n");
 	
-	val_t* _data = (val_t*)map_get(&parse, "Pakthan");
-	printf("is map -> %d\n", _data->is_map);
+	val_t* _data = (val_t*)map_get(&parse, "Tan");
+	if (_data->is_map) {
+		val_t* __data = (val_t*)map_get(&_data->map, "soft");
+		if (!__data->is_map) {
+			printf("%s\n", __data->val);
+		} else {
+			printf("is map error\n");
+		}
+	}
 
 	lex_destroy(&lex);
 	return parse;
