@@ -1,0 +1,4 @@
+pakthan:
+	bw_punishment:
+		soft: 2,
+		hard: 0;
