@@ -1,16 +1,45 @@
-# ClassRoomBadWordPunishmentDB ℹ️
+# ssff-Format ℹ️
 
-* The purpose of this project is to create a database management system to store information about my classmates, specifically their scores for bad language punishments.
-* The system is written in C and uses a custom file format for storing the database. It can read and write data to and from the database.
+This project is currently in the very early stages of development. Please visit the Progress section to see the library’s current capabilities, and the TODO section to learn about future planned features.
+
+ssff-loader is a C library designed to load and write data to a custom file format I created, called ssff. Initially, I developed ssff-loader to store data about my classmates, which is why ssff stands for Simple Student File Format.
 
 ## FileFormat 📁
 
+Here are 3 examples of what ssff format might look like in the future.
+
 ```
-name:
-    soft_punishment: 0,
-    hard_punishment: 0;
+John:
+    info:
+        age: 0,
+        id: 0;
+
+Jim:
+    info:
+        age: 0,
+        id: 0;
 ```
+
+```
+Friends:
+    name1: "Joe",
+    name2: "Jam",
+    name3: "Mama";
+```
+
+```
+Cars:
+    momCar:
+        working: false,
+    dadCar:
+        working: true;
+```
+
+## Progress 🗿
+
+* Reading ssff file
 
 ## TODO 🥅
 
-* Implement a type system for my custom file format.
+* A type system for ssff.
+* Writting to a ssff file.
