@@ -37,7 +37,7 @@ Cars:
 
 ## Progress 🗿
 
-* Reading ssff file
+* Reading an ssff file
 
 ## TODO 🥅
 
