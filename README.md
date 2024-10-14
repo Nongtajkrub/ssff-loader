@@ -1,4 +1,4 @@
-# ssff-Format ℹ️
+# ssff-loader ℹ️
 
 This project is currently in the very early stages of development. Please visit the Progress section to see the library’s current capabilities, and the TODO section to learn about future planned features.
 
