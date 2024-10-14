@@ -1,6 +1,6 @@
 # ssff-loader ℹ️
 
-This project is currently in the very early stages of development. Please visit the Progress section to see the library’s current capabilities, and the TODO section to learn about future planned features.
+This project is currently in the very early stages of development. Please visit the [Progress](https://github.com/Nongtajkrub/ssff-loader#progress-) section to see the library’s current capabilities, and the [TODO](https://github.com/Nongtajkrub/ssff-loader#TODO-) section to learn about future planned features.
 
 ssff-loader is a C library designed to load and write data to a custom file format I created, called ssff. Initially, I developed ssff-loader to store data about my classmates, which is why ssff stands for Simple Student File Format.
 
