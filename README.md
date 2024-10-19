@@ -43,3 +43,4 @@ Cars:
 
 * A type system for ssff.
 * Writting to a ssff file.
+* Compile ssff-loader into a lib.
